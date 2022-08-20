@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Commit message style follow this format
+# 
+# <type>(<scope>): <subject>
+#  
+# type is mandatory
+# scope is optional
+# subject is mandatory
+# 
+# ----------------------------------------------
+# Type has to be one of strings bellow
+# 
+# build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+# ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+# docs: Documentation only changes
+# feat: A new feature
+# fix: A bug fix
+# chore: Change which doesnt affects end user - e.g. modify .gitignore
+# perf: A code change that improves performance
+# refactor: A code change that neither fixes a bug nor adds a feature
+# revert: Reverting code change to previous version
+# style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+# test: Adding missing tests or correcting existing tests
+# 
+# Optional - The scope should be the name of the affected component
+# ----------------------------------------------
+# 
+# Example of valid commit messages:
+# fix(release): need to depend on latest rxjs and zone.js
+# docs(changelog): update changelog to beta.5
+# feat: add register button
+# 
+# Example of invalid commit messages:
+# Add login modal dialog
+# docss(changelog): update changelog to beta.5
+# czxvcxvasd
+# 
+# Based on Conventional Commits https://www.conventionalcommits.org/en/v1.0.0/
+
+# =================== Color Output setup ============== #
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Purple='\033[0;35m'       # Purple
+Cyan='\033[0;36m'         # Cyan
+NC='\033[0m' 			  # No Color
+# ===================================================== #
+
+INPUT_FILE=$1
+START_LINE=`head -n1 $INPUT_FILE`
+PATTERN="(^(build|ci|docs|feat|fix|perf|refactor|revert|style|test|chore){1}(\([[:alnum:]._-]+\))?(!)?: ([[:alnum:]])+([[:space:][:print:]]*))|(Initial[[:space:]]commit)"
+
+if ! [[ "$START_LINE" =~ $PATTERN ]]; then
+  printf "\n${Red}🤦 Bad commit message!${NC} allowed pattern: ${Green}<type>${NC}(${Purple}<scope>${NC}): ${Cyan}<subject>${NC}\nExamples:
+  ${Green}fix${NC}(${Purple}release${NC}): ${Cyan}need to depend on latest rxjs and zone.js${NC}
+  ${Green}docs${NC}(${Purple}changelog${NC}): ${Cyan}update changelog to beta.5${NC}
+  ${Green}feat${NC}: ${Cyan}add register button${NC}\n\n"
+  exit 1
+fi
