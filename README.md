@@ -23,7 +23,7 @@ This project provides low level tools, to improve your code style.
 
 <br />
 
-![commit-failed-video](assets/commit-failed.mov)
+![commit-failed-video](assets/commit-failed.gif)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
